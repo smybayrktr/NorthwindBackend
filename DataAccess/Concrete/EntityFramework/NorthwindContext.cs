@@ -17,6 +17,7 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<Product> Products { get; set; } //Product sınıfım veri tabanındaki Products tablosuna denk geliyor demiş olduk.
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
 
     }
