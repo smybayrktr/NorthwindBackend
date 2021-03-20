@@ -14,13 +14,26 @@ namespace ConsoleUI
             //EfProductDalTest2();
             //CategoryTest();
             //ProductDetailsTest();
+            ProductManager productManager = new ProductManager(new EfProductDal());
+            var result = productManager.GetProductDetails();
+            if (result.Success)
+            {
+                foreach (var product in result.Data)
+                {
+                    Console.WriteLine(product.ProductName + "/" + product.CategoryName);
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
 
         }
 
         private static void ProductDetailsTest()
         {
             ProductManager productManager = new ProductManager(new EfProductDal());
-            foreach (var product in productManager.GetProductDetails())
+            foreach (var product in productManager.GetProductDetails().Data)
             {
                 Console.WriteLine(product.ProductName + "/" + product.CategoryName);
             }
@@ -38,7 +51,7 @@ namespace ConsoleUI
         private static void EfProductDalTest2()
         {
             ProductManager productManager = new ProductManager(new EfProductDal());
-            foreach (var product in productManager.GetByUnitPrice(50, 100))
+            foreach (var product in productManager.GetByUnitPrice(50, 100).Data)
             {
                 Console.WriteLine(product.ProductName);
             }
@@ -47,7 +60,7 @@ namespace ConsoleUI
         private static void EfProductDalTest()
         {
             ProductManager productManager = new ProductManager(new EfProductDal());
-            foreach (var product in productManager.GetAll())
+            foreach (var product in productManager.GetAll().Data)
             {
                 Console.WriteLine(product.ProductName);
             }
@@ -56,7 +69,7 @@ namespace ConsoleUI
         private static void InMemoryTest()
         {
             ProductManager productManager = new ProductManager(new InMemoryProductDal());
-            foreach (var product in productManager.GetAll())
+            foreach (var product in productManager.GetAll().Data)
             {
                 Console.WriteLine(product.ProductName);
             }
