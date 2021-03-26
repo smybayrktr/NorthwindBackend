@@ -9,28 +9,28 @@ namespace Core.Interceptors
         protected virtual void OnAfter(IInvocation invocation) { }
         protected virtual void OnException(IInvocation invocation, System.Exception e) { }
         protected virtual void OnSuccess(IInvocation invocation) { }
-        public override void Intercept(IInvocation invocation)
+        public override void Intercept(IInvocation invocation) //Çalıştırmak istediğim metot.
         {
             var isSuccess = true;
-            OnBefore(invocation);
+            OnBefore(invocation); //Methodun başında çalışır
             try
             {
                 invocation.Proceed();
             }
-            catch (Exception e)
+            catch (Exception e)  
             {
                 isSuccess = false;
-                OnException(invocation, e);
+                OnException(invocation, e); //Hata alınca çalışır
                 throw;
             }
             finally
             {
                 if (isSuccess)
                 {
-                    OnSuccess(invocation);
+                    OnSuccess(invocation);  //Başarılı olunca çalışır
                 }
             }
-            OnAfter(invocation);
+            OnAfter(invocation); //Metottan sonra çalıır
         }
     }
 }

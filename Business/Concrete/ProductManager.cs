@@ -22,7 +22,8 @@ namespace Business.Concrete
         {
             _productDal = productDal;
         }
-        [ValidationAspect(typeof(ProductValidator))]
+        //Metot çağırıldığında Attribute varmı diye bakar. Varsa gider attribute çalıştırır.
+        [ValidationAspect(typeof(ProductValidator))] // Add metotunu ProductValidator a göre doğrulama yapar.
         public IResult Add(Product product)
         {
             _productDal.Add(product);
