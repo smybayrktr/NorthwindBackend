@@ -1,36 +1,39 @@
 ﻿using Castle.DynamicProxy;
 using System;
 
-namespace Core.Interceptors
+namespace Core.Utilities.Interceptors
 {
     public abstract class MethodInterception : MethodInterceptionBaseAttribute
     {
+        //invocation :  business method
         protected virtual void OnBefore(IInvocation invocation) { }
         protected virtual void OnAfter(IInvocation invocation) { }
         protected virtual void OnException(IInvocation invocation, System.Exception e) { }
         protected virtual void OnSuccess(IInvocation invocation) { }
-        public override void Intercept(IInvocation invocation) //Çalıştırmak istediğim metot.
+        public override void Intercept(IInvocation invocation)
         {
             var isSuccess = true;
-            OnBefore(invocation); //Methodun başında çalışır
+            OnBefore(invocation);
             try
             {
                 invocation.Proceed();
             }
-            catch (Exception e)  
+            catch (Exception e)
             {
                 isSuccess = false;
-                OnException(invocation, e); //Hata alınca çalışır
+                OnException(invocation, e);
                 throw;
             }
             finally
             {
                 if (isSuccess)
                 {
-                    OnSuccess(invocation);  //Başarılı olunca çalışır
+                    OnSuccess(invocation);
                 }
             }
-            OnAfter(invocation); //Metottan sonra çalıır
+            OnAfter(invocation);
         }
     }
+
 }
+

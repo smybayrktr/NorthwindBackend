@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.CCS;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
@@ -26,8 +27,10 @@ namespace Business.Concrete
             _categoryService = categoryService;
             _productDal = productDal;
         }
+        [SecuredOperation("product.add,admin")]
         //Metot çağırıldığında Attribute varmı diye bakar. Varsa gider attribute çalıştırır.
         [ValidationAspect(typeof(ProductValidator))] // Add metotunu ProductValidator a göre doğrulama yapar.
+        
         public IResult Add(Product product)
         {
             IResult result = BusinessRules.Run(CheckIfProductCountOfCategoryCorrect(product.CategoryId),
@@ -105,15 +108,5 @@ namespace Business.Concrete
             }
             return new SuccessResult();
         }
-
-
-
-
-
-
-
-
-
-
     }
 }
